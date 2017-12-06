@@ -1,4 +1,5 @@
 package com.bigtou.umbrella.util;
+
 import java.security.MessageDigest;
 
 public class MD5Util {
