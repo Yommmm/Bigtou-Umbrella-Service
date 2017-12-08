@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bigtou.umbrella.util.CommUtil;
 import com.bigtou.umbrella.util.Constants;
 import com.bigtou.umbrella.util.HttpUtil;
+import com.bigtou.umbrella.util.PayUtil;
 import com.bigtou.umbrella.util.QRCodeUtil;
 import com.bigtou.umbrella.util.XMLUtil;
 
@@ -143,14 +144,20 @@ public class PayController {
 		out.close();
 	}
 
-	/*
+	/**
+	 * 微信退款接口
+	 * @param response
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/refund")
 	public String wechatRefund(HttpServletResponse response, HttpServletRequest request)
 			throws Exception {
 
-		String currTime = TenpayUtil.getCurrTime();
+		String currTime = PayUtil.getCurrTime();
 		String strTime = currTime.substring(8, currTime.length());
-		String strRandom = TenpayUtil.buildRandom(4) + "";
+		String strRandom = PayUtil.buildRandom(4) + "";
 		String nonce_str = strTime + strRandom;
 
 		SortedMap<String, String> parameters = new TreeMap<String, String>();
@@ -178,5 +185,5 @@ public class PayController {
 			return "未知的错误";
 		}
 	}
-	*/
+
 }
