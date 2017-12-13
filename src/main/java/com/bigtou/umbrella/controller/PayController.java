@@ -150,7 +150,7 @@ public class PayController {
 	 * @param request
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value = "/refund")
 	public String wechatRefund(HttpServletResponse response, HttpServletRequest request)
 			throws Exception {
@@ -169,7 +169,7 @@ public class PayController {
 		parameters.put("total_fee", "");
 		parameters.put("refund_fee", "");
 		parameters.put("op_user_id", Constants.MCH_ID);
-		WechatPayService wechatPayService = new WechatPayService();
+//		WechatPayService wechatPayService = new WechatPayService();
 
 		Map map = wechatPayService.forRefund(parameters);
 		if (map != null) {
@@ -184,6 +184,6 @@ public class PayController {
 		} else {
 			return "未知的错误";
 		}
-	}
+	}*/
 
 }
