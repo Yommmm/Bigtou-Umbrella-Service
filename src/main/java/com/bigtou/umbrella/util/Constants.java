@@ -22,7 +22,7 @@ public class Constants {
 	public static String MCH_ID = "1491899052";
 	public static String API_KEY = "dt5632335dt5632335dt5632335dt563";
 	public static String UFDODER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-	public static String NOTIFY_URL = "http://127.0.0.1:8080/wechat-pay/renotify";
+	public static String NOTIFY_URL = "http://www.bigtou.net:8080/InetGetMsg/servlet/GetPostTestDemo";
 	public static String DEVICE_INFO = "WEB";
 	public static String TRADE_TYPE = "NATIVE";
 	public static String FEE_TYPE = "CNY";
