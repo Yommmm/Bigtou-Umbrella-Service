@@ -92,7 +92,7 @@ public class PayController {
 	@RequestMapping(value = "/callback")
 	public void callBack(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		logger.info("====================回调成功====================");
+		logger.info("====================call back success====================");
 
 		StringBuffer sb = new StringBuffer();
 		InputStream inputStream = request.getInputStream();
@@ -118,10 +118,10 @@ public class PayController {
 			if ("SUCCESS".equals((String) params.get("result_code"))) {
 
 				// 开始执行自己的业务逻辑
-
+				System.out.println("request: " + request);
 				// 结束执行自己的业务逻辑
 
-				logger.info("支付成功");
+				logger.info("pay success");
 				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.
 				resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
 						+ "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
@@ -140,6 +140,7 @@ public class PayController {
 
 		BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
 		out.write(resXml.getBytes());
+		System.out.println(resXml);
 		out.flush();
 		out.close();
 	}
