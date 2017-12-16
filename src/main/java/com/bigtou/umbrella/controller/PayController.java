@@ -113,12 +113,14 @@ public class PayController {
 
 		String resXml = "";
 		// 反馈给微信服务器,判断签名是否正确
-		if (CommUtil.isTenpaySign("UTF-8", params, Constants.API_KEY)) {
+//		if (CommUtil.isTenpaySign("UTF-8", params, Constants.API_KEY)) {
 			// 支付成功
 			if ("SUCCESS".equals((String) params.get("result_code"))) {
 
 				// 开始执行自己的业务逻辑
+				System.out.println("my logic start");
 				System.out.println("request: " + request);
+				System.out.println("my logic finish");
 				// 结束执行自己的业务逻辑
 
 				logger.info("pay success");
@@ -132,11 +134,11 @@ public class PayController {
 						+ "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
 			}
 
-		} else {
-			logger.info("签名验证错误");
-			resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
-					+ "<return_msg><![CDATA[签名验证错误]]></return_msg>" + "</xml> ";
-		}
+//		} else {
+//			logger.info("签名验证错误");
+//			resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+//					+ "<return_msg><![CDATA[签名验证错误]]></return_msg>" + "</xml> ";
+//		}
 
 		BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
 		out.write(resXml.getBytes());
