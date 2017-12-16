@@ -133,4 +133,18 @@ public class XMLUtil {
 
 		return sb.toString();
 	}
+
+	public static String createXML(Map<String, String> map, String sign) throws Exception {
+		StringBuilder xml = new StringBuilder("<xml>");
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			String key = entry.getKey();
+			String val = entry.getValue();
+
+			xml.append("<").append(key).append(">").append(val).append("</").append(key).append(">");
+		}
+		xml.append("<").append("sign").append(">").append(sign).append("</").append("sign").append(">");
+		xml.append("</xml>");
+		String result = xml.toString();
+		return result;
+	}
 }

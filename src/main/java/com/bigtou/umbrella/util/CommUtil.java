@@ -160,6 +160,29 @@ public class CommUtil {
 
 		return tenpaySign.equals(mysign);
 	}
+	
+	/**
+	 * 
+	 * @param packageParams
+	 * @param API_KEY
+	 * @return
+	 */
+	public static String signMd5(Map<String, String> packageParams, String API_KEY) {
+	    StringBuffer sb = new StringBuffer();
+	    Set es = packageParams.entrySet();
+	    Iterator it = es.iterator();
+	    while (it.hasNext()) {
+	        Map.Entry entry = (Map.Entry) it.next();
+	        String k = (String) entry.getKey();
+	        String v = (String) entry.getValue();
+	        if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
+	            sb.append(k + "=" + v + "&");
+	        }
+	    }
+	    sb.append("key=" + API_KEY);
+	    String sign = MD5Util.MD5Encode(sb.toString(), "UTF-8").toUpperCase();
+	    return sign;
+	}
 
 	/**
 	 * 获取客户端IP
