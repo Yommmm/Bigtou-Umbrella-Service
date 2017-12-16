@@ -5,11 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -28,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bigtou.umbrella.util.CommUtil;
 import com.bigtou.umbrella.util.Constants;
+import com.bigtou.umbrella.util.GetWxOrderNo;
 import com.bigtou.umbrella.util.HttpUtil;
 import com.bigtou.umbrella.util.PayUtil;
 import com.bigtou.umbrella.util.QRCodeUtil;
+import com.bigtou.umbrella.util.RequestHandler;
 import com.bigtou.umbrella.util.XMLUtil;
 
 @RestController
@@ -112,34 +109,26 @@ public class PayController {
 		}
 
 		String resXml = "";
-		// 反馈给微信服务器,判断签名是否正确
-//		if (CommUtil.isTenpaySign("UTF-8", params, Constants.API_KEY)) {
-			// 支付成功
-			if ("SUCCESS".equals((String) params.get("result_code"))) {
+		// 支付成功
+		if ("SUCCESS".equals((String) params.get("result_code"))) {
 
-				// 开始执行自己的业务逻辑
-				System.out.println("my logic start");
-				System.out.println("params: " + params);
-				System.out.println("request: " + request);
-				System.out.println("my logic finish");
-				// 结束执行自己的业务逻辑
+			// 开始执行自己的业务逻辑
+			System.out.println("my logic start");
+			System.out.println("params: " + params);
+			System.out.println("request: " + request);
+			System.out.println("my logic finish");
+			// 结束执行自己的业务逻辑
 
-				logger.info("pay success");
-				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.
-				resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
-						+ "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+			logger.info("pay success");
+			// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.
+			resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
+					+ "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
 
-			} else {
-				logger.info("pay failed, message：" + params.get("err_code"));
-				resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
-						+ "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
-			}
-
-//		} else {
-//			logger.info("签名验证错误");
-//			resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
-//					+ "<return_msg><![CDATA[签名验证错误]]></return_msg>" + "</xml> ";
-//		}
+		} else {
+			logger.info("pay failed, message：" + params.get("err_code"));
+			resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+					+ "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
+		}
 
 		BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
 		out.write(resXml.getBytes());
@@ -150,44 +139,73 @@ public class PayController {
 
 	/**
 	 * 微信退款接口
+	 * 
 	 * @param response
 	 * @param request
 	 * @return
 	 * @throws Exception
-	 *//*
+	 */
 	@RequestMapping(value = "/refund")
-	public String wechatRefund(HttpServletResponse response, HttpServletRequest request)
-			throws Exception {
-
+	public String wechatRefund(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		String currTime = PayUtil.getCurrTime();
-		String strTime = currTime.substring(8, currTime.length());
-		String strRandom = PayUtil.buildRandom(4) + "";
-		String nonce_str = strTime + strRandom;
+        String strTime = currTime.substring(8, currTime.length());
+        String strRandom = PayUtil.buildRandom(4) + "";
+        String nonce_str = strTime + strRandom;
 
-		SortedMap<String, String> parameters = new TreeMap<String, String>();
-		parameters.put("appid", Constants.APP_ID);
-		parameters.put("mch_id", Constants.MCH_ID);
-		parameters.put("nonce_str", nonce_str);
-		parameters.put("out_trade_no", "");
-		parameters.put("out_refund_no", "" + strTime);
-		parameters.put("total_fee", "");
-		parameters.put("refund_fee", "");
-		parameters.put("op_user_id", Constants.MCH_ID);
-//		WechatPayService wechatPayService = new WechatPayService();
+        String out_trade_no = "";
+        String out_refund_no = "";
+        String total_fee = "1";
+        String refund_fee = "1";
 
-		Map map = wechatPayService.forRefund(parameters);
-		if (map != null) {
-			String return_code = (String) map.get("return_code");
-			String result_code = (String) map.get("result_code");
-			if (return_code.equals("SUCCESS") && result_code.equals("SUCCESS")) {
-				// 退款成功
-				return "退款成功";
-			} else {
-				return (String) map.get("err_code_des");
-			}
-		} else {
-			return "未知的错误";
-		}
-	}*/
+        SortedMap<String, String> parameters = new TreeMap<String, String>();
+        parameters.put("appid", Constants.APP_ID);
+        parameters.put("mch_id", Constants.MCH_ID);
+        parameters.put("nonce_str", nonce_str);
+        // 在notify_url中解析微信返回的信息获取到 transaction_id，此项不是必填
+        parameters.put("transaction_id", "微信支付订单中调用统一接口后微信返回的 transaction_id");
+        parameters.put("out_trade_no", out_trade_no);
+        // 自己设定的退款申请号，约束为UK
+        parameters.put("out_refund_no", out_refund_no);
+        parameters.put("total_fee", total_fee); //单位为分
+        parameters.put("refund_fee", refund_fee); //单位为分
+        // 操作员帐号, 默认为商户号
+        parameters.put("op_user_id", Constants.MCH_ID);
+        RequestHandler requestHandler = new RequestHandler(request, response);
+        requestHandler.init(Constants.APP_ID, Constants.APP_SECRET, Constants.API_KEY);
+        String sign = requestHandler.createSign(parameters);
+
+        String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+
+        String xml = "<xml>"
+                + "<appid><![CDATA[" + Constants.APP_ID + "]]></appid>"
+                + "<mch_id><![CDATA[" + Constants.MCH_ID +"]]></mch_id>"
+                + "<nonce_str><![CDATA[" + nonce_str + "]]></nonce_str>"
+                + "<out_trade_no><![CDATA[" + out_trade_no + "]]></out_trade_no>"
+                + "<out_refund_no><![CDATA[" + out_refund_no + "]]></out_refund_no>"
+                + "<total_fee><![CDATA[" + total_fee + "]]></total_fee>"
+                + "<refund_fee><![CDATA[" + refund_fee + "]]></refund_fee>"
+                + "<op_user_id><![CDATA[" + Constants.MCH_ID + "]]></op_user_id>"
+                + "<sign>" + sign + "</sign>"
+                + "</xml>";
+
+        try {
+            Map map = GetWxOrderNo.forRefund(createOrderURL, xml);
+            if(map != null){
+                String return_code = (String) map.get("return_code");
+                String result_code = (String) map.get("result_code");
+                if(return_code.equals("SUCCESS") && result_code.equals("SUCCESS")){
+                    System.out.println("退款成功");
+                } else {
+                    System.out.println("退款失败");
+                }
+            } else {
+                System.out.println("退款失败");
+            }
+        } catch (Exception e) {
+            System.out.print("退款失败");
+            e.printStackTrace();
+        }
+        return null;
+	}
 
 }
