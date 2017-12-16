@@ -129,7 +129,7 @@ public class PayController {
 						+ "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
 
 			} else {
-				logger.info("支付失败,错误信息：" + params.get("err_code"));
+				logger.info("pay failed, message：" + params.get("err_code"));
 				resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
 						+ "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
 			}
