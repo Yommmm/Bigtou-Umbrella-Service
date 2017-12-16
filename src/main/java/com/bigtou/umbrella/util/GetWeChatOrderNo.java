@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 
-public class GetWxOrderNo {
+public class GetWeChatOrderNo {
 
 	public static Map<String, Object> forRefund(String url, String xmlParam) throws Exception {
 		Map doXMLtoMap = new HashMap();

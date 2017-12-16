@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bigtou.umbrella.util.CommUtil;
 import com.bigtou.umbrella.util.Constants;
-import com.bigtou.umbrella.util.GetWxOrderNo;
+import com.bigtou.umbrella.util.GetWeChatOrderNo;
 import com.bigtou.umbrella.util.HttpUtil;
 import com.bigtou.umbrella.util.PayUtil;
 import com.bigtou.umbrella.util.QRCodeUtil;
@@ -189,7 +189,7 @@ public class PayController {
                 + "</xml>";
 
         try {
-            Map map = GetWxOrderNo.forRefund(createOrderURL, xml);
+            Map map = GetWeChatOrderNo.forRefund(createOrderURL, xml);
             if(map != null){
                 String return_code = (String) map.get("return_code");
                 String result_code = (String) map.get("result_code");
