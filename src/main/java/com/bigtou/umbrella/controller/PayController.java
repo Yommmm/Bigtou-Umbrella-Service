@@ -119,6 +119,7 @@ public class PayController {
 
 				// 开始执行自己的业务逻辑
 				System.out.println("my logic start");
+				System.out.println("params: " + params);
 				System.out.println("request: " + request);
 				System.out.println("my logic finish");
 				// 结束执行自己的业务逻辑
