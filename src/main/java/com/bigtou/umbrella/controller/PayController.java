@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,21 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bigtou.umbrella.util.CommUtil;
 import com.bigtou.umbrella.util.Constants;
-import com.bigtou.umbrella.util.GetWeChatOrderNo;
 import com.bigtou.umbrella.util.HttpUtil;
-import com.bigtou.umbrella.util.PayUtil;
 import com.bigtou.umbrella.util.QRCodeUtil;
-import com.bigtou.umbrella.util.RequestHandler;
 import com.bigtou.umbrella.util.XMLUtil;
-import com.bigtou.umbrella.vo.UmbrellaVO;
 
 @RestController
 @RequestMapping(value = "wechat")
@@ -142,77 +133,6 @@ public class PayController {
 		System.out.println(resXml);
 		out.flush();
 		out.close();
-	}
-
-	/**
-	 * 微信退款接口
-	 * 
-	 * @param response
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/refundd")
-	public String wechatRefund(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		String currTime = PayUtil.getCurrTime();
-        String strTime = currTime.substring(8, currTime.length());
-        String strRandom = PayUtil.buildRandom(4) + "";
-        String nonce_str = strTime + strRandom;
-
-        String out_trade_no = "";
-        String out_refund_no = "";
-        String total_fee = "1";
-        String refund_fee = "1";
-
-        SortedMap<String, String> parameters = new TreeMap<String, String>();
-        parameters.put("appid", Constants.APP_ID);
-        parameters.put("mch_id", Constants.MCH_ID);
-        parameters.put("nonce_str", nonce_str);
-        // 在notify_url中解析微信返回的信息获取到 transaction_id，此项不是必填
-        parameters.put("transaction_id", "微信支付订单中调用统一接口后微信返回的 transaction_id");
-        parameters.put("out_trade_no", out_trade_no);
-        // 自己设定的退款申请号，约束为UK
-        parameters.put("out_refund_no", out_refund_no);
-        parameters.put("total_fee", total_fee); //单位为分
-        parameters.put("refund_fee", refund_fee); //单位为分
-        // 操作员帐号, 默认为商户号
-        parameters.put("op_user_id", Constants.MCH_ID);
-        RequestHandler requestHandler = new RequestHandler(request, response);
-        requestHandler.init(Constants.APP_ID, Constants.APP_SECRET, Constants.API_KEY);
-        String sign = requestHandler.createSign(parameters);
-
-        String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-
-        String xml = "<xml>"
-                + "<appid><![CDATA[" + Constants.APP_ID + "]]></appid>"
-                + "<mch_id><![CDATA[" + Constants.MCH_ID +"]]></mch_id>"
-                + "<nonce_str><![CDATA[" + nonce_str + "]]></nonce_str>"
-                + "<out_trade_no><![CDATA[" + out_trade_no + "]]></out_trade_no>"
-                + "<out_refund_no><![CDATA[" + out_refund_no + "]]></out_refund_no>"
-                + "<total_fee><![CDATA[" + total_fee + "]]></total_fee>"
-                + "<refund_fee><![CDATA[" + refund_fee + "]]></refund_fee>"
-                + "<op_user_id><![CDATA[" + Constants.MCH_ID + "]]></op_user_id>"
-                + "<sign>" + sign + "</sign>"
-                + "</xml>";
-
-        try {
-            Map map = GetWeChatOrderNo.forRefund(createOrderURL, xml);
-            if(map != null){
-                String return_code = (String) map.get("return_code");
-                String result_code = (String) map.get("result_code");
-                if(return_code.equals("SUCCESS") && result_code.equals("SUCCESS")){
-                    System.out.println("退款成功");
-                } else {
-                    System.out.println("退款失败");
-                }
-            } else {
-                System.out.println("退款失败");
-            }
-        } catch (Exception e) {
-            System.out.print("退款失败");
-            e.printStackTrace();
-        }
-        return null;
 	}
 
 }
