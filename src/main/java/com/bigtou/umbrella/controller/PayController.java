@@ -32,11 +32,6 @@ public class PayController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PayController.class);
 
-	@GetMapping(value = "/hello")
-	public String test() {
-		return "Hello";
-	}
-
 	/**
 	 * 微信支付二维码获取接口
 	 * 
