@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.bigtou.umbrella.util.CommUtil;
@@ -15,6 +16,7 @@ import com.bigtou.umbrella.util.XMLUtil;
 import com.bigtou.umbrella.util.http.ClientCustomSSL;
 import com.bigtou.umbrella.vo.UmbrellaVO;
 
+@Component
 public class WeChatService {
 
 	private static final Logger logger = LoggerFactory.getLogger(WeChatService.class);
@@ -25,16 +27,16 @@ public class WeChatService {
 		packageParams.put("appid", Constants.APP_ID);// 应用id
 		packageParams.put("mch_id", Constants.MCH_ID);// 商户号
 		packageParams.put("nonce_str", CommUtil.getNonce_str());// 随机字符串
-		packageParams.put("out_trade_no", umbrellaVo.getOutRefundNo());// 订单号
+		packageParams.put("out_trade_no", umbrellaVo.getOutTradeNo());// 订单号
 		packageParams.put("out_refund_no", "refund" + CommUtil.getNonce_str());// 退款单号
-		packageParams.put("total_fee", "1");// 订单总金额Utils.getMoney()
-		packageParams.put("refund_fee", "1");// 退款总金额
+		packageParams.put("total_fee", umbrellaVo.getTotalFee().toString());// 订单总金额Utils.getMoney()
+		packageParams.put("refund_fee", umbrellaVo.getRefundFee().toString());// 退款总金额
 		packageParams.put("op_user_id", Constants.MCH_ID);// 商户号
 
 		String sign = CommUtil.signMd5(packageParams, Constants.API_KEY);
 		String result = "FAIL";
 		String msg = "";
-		logger.debug("--sign--=" + sign);
+		logger.info("--sign--=" + sign);
 
 		String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 		String xml = null;
@@ -43,7 +45,7 @@ public class WeChatService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.debug("--xml-=" + xml);
+		logger.info("--xml-=" + xml);
 		String retur = null;
 		try {
 			retur = ClientCustomSSL.doRefund(createOrderURL, xml);
@@ -75,7 +77,6 @@ public class WeChatService {
 				msg = (String) map.get("return_msg");
 				logger.info(" 微信退款失败 refundfail msg = {}", msg);
 			}
-
 		}
 		return msg;
 	}
