@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  
+spring: 
+  application:
+    name: BigTouService
+    
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/micro-service?useSSL=true
+    username: root
+    password: root
+    
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create
