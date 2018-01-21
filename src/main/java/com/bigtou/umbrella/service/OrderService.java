@@ -1,6 +1,5 @@
 package com.bigtou.umbrella.service;
 
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	public Object saveOrder(Map<String, String> params) {
+	public UmbrellaOrder saveOrder(UmbrellaOrder params) {
 		UmbrellaOrder order = new UmbrellaOrder();
 		order.setOrderId(UUID.randomUUID().toString());
-		order.setBeginMachineId(params.get("beginMachineId"));
-		order.setCSFlag(params.get("CSFlag"));
-		order.setUmbrellaType("umbrellaType");
+		order.setBeginMachineId(params.getBeginMachineId());
+		order.setCSFlag(params.getCSFlag());
+		order.setUmbrellaType(params.getUmbrellaType());
 		return orderRepository.save(order);
 	}
 
@@ -28,7 +27,7 @@ public class OrderService {
 		return orderRepository.queryUmbrellaOrderByBeginMachineId(machineId);
 	}
 	
-	public UmbrellaOrder saveOrder(UmbrellaOrder umbrellaOrder) {
+	public UmbrellaOrder save(UmbrellaOrder umbrellaOrder) {
 		return orderRepository.save(umbrellaOrder);
 	}
 }

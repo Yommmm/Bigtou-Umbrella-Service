@@ -14,25 +14,25 @@ public class MachineService {
 	@Autowired
 	private OrderService orderService;
 
-	public UmbrellaOrder heartbeat(Map<String, String> params) {
-		String machineId = params.get("machineId");
-		String machineIP = params.get("machineIP");
-		String sjFlag = params.get("SJFlag");
+	public UmbrellaOrder heartbeat(UmbrellaOrder params) {
+		String machineId = params.getBeginMachineId();
+		String machineIP = params.getMachineIP();
+		String sjFlag = params.getSJFlag();
 		
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		if(GlobalConstants.SJ_FLAG_0.equals(sjFlag) && GlobalConstants.CS_FLAG_1.equals(umbrellaOrder.getCSFlag())) {
 			umbrellaOrder.setMachineIP(machineIP);
-			return orderService.saveOrder(umbrellaOrder);
+			return orderService.save(umbrellaOrder);
 		} else {
 			return null;
 		}
 	}
 	
-	public UmbrellaOrder takeOutUmbrella(Map<String, String> params) {
-		String machineId = params.get("machineId");
-		String machineIP = params.get("machineIP");
-		String sjFlag = params.get("SJFlag");
-		String umbrellaId = params.get("umbrellaId");
+	public UmbrellaOrder takeOutUmbrella(UmbrellaOrder params) {
+		String machineId = params.getBeginMachineId();
+		String machineIP = params.getMachineIP();
+		String sjFlag = params.getSJFlag();
+		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		umbrellaOrder.setSJFlag(sjFlag);
 		umbrellaOrder.setMachineIP(machineIP);

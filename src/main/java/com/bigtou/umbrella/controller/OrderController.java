@@ -1,14 +1,14 @@
 package com.bigtou.umbrella.controller;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bigtou.umbrella.bean.UmbrellaOrder;
 import com.bigtou.umbrella.service.OrderService;
 
 @RestController
@@ -21,7 +21,7 @@ public class OrderController {
 	private OrderService orderService;
 	
 	@PostMapping
-	public Object saveOrder(Map<String, String> params) {
+	public UmbrellaOrder saveOrder(@RequestBody UmbrellaOrder params) {
 		logger.info("save order : {}", params);
 		return orderService.saveOrder(params);
 	}
