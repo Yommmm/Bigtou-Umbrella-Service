@@ -10,19 +10,28 @@ import javax.persistence.Id;
 public class UmbrellaOrder {
 
 	@Id
-	private Long orderId; 
+	private String orderId; 
 	
 	@Column(name = "UMBRELLA_ID")
 	private String umbrellaId;
 	
+	@Column(name = "UMBRELLA_TYPE")
+	private String umbrellaType;
+	
+	@Column(name = "CS_FLAG")
+	private String CSFlag;
+	
+	@Column(name = "SJ_FLAG")
+	private String SJFlag;
+	
 	@Column(name = "BEGIN_TIME")
-	private String beginTime;
+	private Date beginTime;
 	
 	@Column(name = "END_TIME")
 	private Date endTime;
 	
 	@Column(name = "BEGIN_MACHINE_ID")
-	private Date beginMachineId;
+	private String beginMachineId;
 	
 	@Column(name = "END_MACHINE_ID")
 	private String endMachineId;
@@ -30,11 +39,11 @@ public class UmbrellaOrder {
 	@Column(name = "USER_ID")
 	private String userId;
 
-	public Long getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(Long orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
@@ -46,11 +55,19 @@ public class UmbrellaOrder {
 		this.umbrellaId = umbrellaId;
 	}
 
-	public String getBeginTime() {
+	public String getUmbrellaType() {
+		return umbrellaType;
+	}
+
+	public void setUmbrellaType(String umbrellaType) {
+		this.umbrellaType = umbrellaType;
+	}
+
+	public Date getBeginTime() {
 		return beginTime;
 	}
 
-	public void setBeginTime(String beginTime) {
+	public void setBeginTime(Date beginTime) {
 		this.beginTime = beginTime;
 	}
 
@@ -62,11 +79,11 @@ public class UmbrellaOrder {
 		this.endTime = endTime;
 	}
 
-	public Date getBeginMachineId() {
+	public String getBeginMachineId() {
 		return beginMachineId;
 	}
 
-	public void setBeginMachineId(Date beginMachineId) {
+	public void setBeginMachineId(String beginMachineId) {
 		this.beginMachineId = beginMachineId;
 	}
 
@@ -84,6 +101,22 @@ public class UmbrellaOrder {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getCSFlag() {
+		return CSFlag;
+	}
+
+	public void setCSFlag(String cSFlag) {
+		CSFlag = cSFlag;
+	}
+
+	public String getSJFlag() {
+		return SJFlag;
+	}
+
+	public void setSJFlag(String sJFlag) {
+		SJFlag = sJFlag;
 	}
 	
 }

@@ -14,6 +14,9 @@ public class Umbrella {
 	@Column(name = "UMBRELLA_NAME")
 	private String umbrellaName;
 	
+	@Column(name = "UMBRELLA_TYPE")
+	private String umbrellaType;
+	
 	@Column(name = "CS_FLAG")
 	private String CSFlag;
 	
@@ -50,6 +53,14 @@ public class Umbrella {
 
 	public void setMachineId(String machineId) {
 		this.machineId = machineId;
+	}
+
+	public String getUmbrellaType() {
+		return umbrellaType;
+	}
+
+	public void setUmbrellaType(String umbrellaType) {
+		this.umbrellaType = umbrellaType;
 	}
 	
 }

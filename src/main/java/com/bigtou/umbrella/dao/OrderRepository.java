@@ -8,4 +8,5 @@ import com.bigtou.umbrella.bean.UmbrellaOrder;
 @Repository
 public interface OrderRepository extends JpaRepository<UmbrellaOrder, Long> {
 
+	UmbrellaOrder queryUmbrellaOrderByBeginMachineId(String beginMachineId);
 }
