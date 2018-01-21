@@ -19,8 +19,14 @@ public class MachineController {
 	private MachineService machineService;
 	
 	@PostMapping(value = "/heartbeat")
-	public Object outUmbrella(Map<String, String> params) {
+	public Object heartBeat(Map<String, String> params) {
 		logger.info("save order : {}", params);
 		return machineService.heartbeat(params);
+	}
+	
+	@PostMapping(value = "/takeOutUmbrella")
+	public Object takeOutUmbrella(Map<String, String> params) {
+		logger.info("out params : {}", params);
+		return machineService.takeOutUmbrella(params);
 	}
 }

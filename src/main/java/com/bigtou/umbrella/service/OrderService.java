@@ -27,4 +27,8 @@ public class OrderService {
 	public UmbrellaOrder queryOrderByMachineId(String machineId) {
 		return orderRepository.queryUmbrellaOrderByBeginMachineId(machineId);
 	}
+	
+	public UmbrellaOrder saveOrder(UmbrellaOrder umbrellaOrder) {
+		return orderRepository.save(umbrellaOrder);
+	}
 }

@@ -36,6 +36,9 @@ public class UmbrellaOrder {
 	@Column(name = "END_MACHINE_ID")
 	private String endMachineId;
 	
+	@Column(name = "MACHINE_IP")
+	private String machineIP;
+	
 	@Column(name = "USER_ID")
 	private String userId;
 
@@ -117,6 +120,14 @@ public class UmbrellaOrder {
 
 	public void setSJFlag(String sJFlag) {
 		SJFlag = sJFlag;
+	}
+
+	public String getMachineIP() {
+		return machineIP;
+	}
+
+	public void setMachineIP(String machineIP) {
+		this.machineIP = machineIP;
 	}
 	
 }
