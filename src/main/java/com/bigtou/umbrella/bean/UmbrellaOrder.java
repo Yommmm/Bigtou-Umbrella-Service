@@ -4,28 +4,25 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "ORDER")
-public class Order {
+@Entity(name = "UMBRELLA_ORDER")
+public class UmbrellaOrder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long orderId; 
 	
 	@Column(name = "UMBRELLA_ID")
 	private String umbrellaId;
 	
 	@Column(name = "BEGIN_TIME")
-	private Date beginTime;
+	private String beginTime;
 	
 	@Column(name = "END_TIME")
 	private Date endTime;
 	
 	@Column(name = "BEGIN_MACHINE_ID")
-	private String beginMachineId;
+	private Date beginMachineId;
 	
 	@Column(name = "END_MACHINE_ID")
 	private String endMachineId;
@@ -49,11 +46,11 @@ public class Order {
 		this.umbrellaId = umbrellaId;
 	}
 
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
 
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
 
@@ -65,11 +62,11 @@ public class Order {
 		this.endTime = endTime;
 	}
 
-	public String getBeginMachineId() {
+	public Date getBeginMachineId() {
 		return beginMachineId;
 	}
 
-	public void setBeginMachineId(String beginMachineId) {
+	public void setBeginMachineId(Date beginMachineId) {
 		this.beginMachineId = beginMachineId;
 	}
 
