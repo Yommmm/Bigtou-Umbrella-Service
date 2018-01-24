@@ -1,9 +1,8 @@
 package com.bigtou.umbrella.controller;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ public class MachineController {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
+	@Autowired
 	private MachineService machineService;
 	
 	@PostMapping(value = "/heartbeat")
@@ -29,6 +29,10 @@ public class MachineController {
 	@PostMapping(value = "/takeOutUmbrella")
 	public Object takeOutUmbrella(@RequestBody UmbrellaOrder params) {
 		logger.info("out params : {}", params);
-		return machineService.takeOutUmbrella(params);
+		UmbrellaOrder order = machineService.takeOutUmbrella(params);
+		if(null == order) {
+			return "failed！";
+		}
+		return order;
 	}
 }

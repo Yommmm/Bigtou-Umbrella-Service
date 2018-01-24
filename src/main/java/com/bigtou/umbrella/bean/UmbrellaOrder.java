@@ -19,10 +19,10 @@ public class UmbrellaOrder {
 	private String umbrellaType;
 	
 	@Column(name = "CS_FLAG")
-	private String CSFlag;
+	private String csFlag;
 	
 	@Column(name = "SJ_FLAG")
-	private String SJFlag;
+	private String sjFlag;
 	
 	@Column(name = "BEGIN_TIME")
 	private Date beginTime;
@@ -42,6 +42,9 @@ public class UmbrellaOrder {
 	@Column(name = "USER_ID")
 	private String userId;
 
+	@Column(name = "CREATE_TIME")
+	private Date createTime;
+	
 	public String getOrderId() {
 		return orderId;
 	}
@@ -106,20 +109,20 @@ public class UmbrellaOrder {
 		this.userId = userId;
 	}
 
-	public String getCSFlag() {
-		return CSFlag;
+	public String getCsFlag() {
+		return csFlag;
 	}
 
-	public void setCSFlag(String cSFlag) {
-		CSFlag = cSFlag;
+	public void setCsFlag(String csFlag) {
+		this.csFlag = csFlag;
 	}
 
-	public String getSJFlag() {
-		return SJFlag;
+	public String getSjFlag() {
+		return sjFlag;
 	}
 
-	public void setSJFlag(String sJFlag) {
-		SJFlag = sJFlag;
+	public void setSjFlag(String sjFlag) {
+		this.sjFlag = sjFlag;
 	}
 
 	public String getMachineIP() {
@@ -129,5 +132,13 @@ public class UmbrellaOrder {
 	public void setMachineIP(String machineIP) {
 		this.machineIP = machineIP;
 	}
-	
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
 }

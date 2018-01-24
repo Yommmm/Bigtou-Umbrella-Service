@@ -1,5 +1,6 @@
 package com.bigtou.umbrella.service;
 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,14 @@ public class OrderService {
 		UmbrellaOrder order = new UmbrellaOrder();
 		order.setOrderId(UUID.randomUUID().toString());
 		order.setBeginMachineId(params.getBeginMachineId());
-		order.setCSFlag(params.getCSFlag());
+		order.setCsFlag(params.getCsFlag());
 		order.setUmbrellaType(params.getUmbrellaType());
+		order.setCreateTime(new Date());
 		return orderRepository.save(order);
 	}
 
 	public UmbrellaOrder queryOrderByMachineId(String machineId) {
-		return orderRepository.queryUmbrellaOrderByBeginMachineId(machineId);
+		return orderRepository.queryUmbrellaOrderByBeginMachineIdOrderByCreateTimeDesc(machineId).get(0);
 	}
 	
 	public UmbrellaOrder save(UmbrellaOrder umbrellaOrder) {
