@@ -1,5 +1,10 @@
 package com.bigtou.umbrella.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,22 +15,28 @@ public class MachineService {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private HttpServletRequest request;
 
-	public UmbrellaOrder heartbeat(UmbrellaOrder params) {
+	public Object heartbeat(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
-		String machineIP = params.getMachineIP();
+		String machineIP = request.getRemoteAddr();
 		String sjFlag = params.getSjFlag();
 		
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
+		// 伞机状态：0 空闲，出伞状态 1 出伞，条件满足预出伞成功，写入订单
 		if("0".equals(sjFlag) && "1".equals(umbrellaOrder.getCsFlag())) {
 			umbrellaOrder.setMachineIP(machineIP);
 			return orderService.save(umbrellaOrder);
 		} else {
-			return null;
+			Map<String, String> result = new HashMap<>();
+			result.put("resultCode", "预出伞失败！");
+			return result;
 		}
 	}
 	
-	public UmbrellaOrder takeOutUmbrella(UmbrellaOrder params) {
+	public Object takeOutUmbrella(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String sjFlag = params.getSjFlag();
 		String umbrellaId = params.getUmbrellaId();
@@ -37,6 +48,8 @@ public class MachineService {
 			}
 			return orderService.save(umbrellaOrder);
 		}
-		return null;
+		Map<String, String> result = new HashMap<>();
+		result.put("resultCode", "出伞失败！");
+		return result;
 	}
 }

@@ -17,9 +17,13 @@ public class OrderService {
 	
 	public UmbrellaOrder saveOrder(UmbrellaOrder params) {
 		UmbrellaOrder order = new UmbrellaOrder();
+		// 订单号
 		order.setOrderId(UUID.randomUUID().toString());
+		// 机器编号
 		order.setBeginMachineId(params.getBeginMachineId());
+		// 出伞状态
 		order.setCsFlag(params.getCsFlag());
+		// 出伞类型
 		order.setUmbrellaType(params.getUmbrellaType());
 		order.setCreateTime(new Date());
 		return orderRepository.save(order);
