@@ -41,7 +41,7 @@ public class MachineService {
 		String sjFlag = params.getSjFlag();
 		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
-		if("1".equals(sjFlag)) {
+		if(!"".equals(sjFlag)) {
 			umbrellaOrder.setSjFlag(sjFlag);
 			if(null != umbrellaId && !"".equals(umbrellaId)) {
 				umbrellaOrder.setUmbrellaId(umbrellaId);
