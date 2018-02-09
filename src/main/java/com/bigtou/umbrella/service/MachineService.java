@@ -1,5 +1,6 @@
 package com.bigtou.umbrella.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,9 +43,11 @@ public class MachineService {
 		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		if(!"".equals(sjFlag)) {
+			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败
 			umbrellaOrder.setSjFlag(sjFlag);
 			if(null != umbrellaId && !"".equals(umbrellaId)) {
 				umbrellaOrder.setUmbrellaId(umbrellaId);
+				umbrellaOrder.setBeginTime(new Date());
 			}
 			return orderService.save(umbrellaOrder);
 		}
@@ -52,4 +55,13 @@ public class MachineService {
 		result.put("resultCode", "出伞失败！");
 		return result;
 	}
+	
+	public Object returnUmbrella(UmbrellaOrder params) {
+		String umbrellaId = params.getUmbrellaId();
+		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
+		order.setEndTime(new Date());
+		order.setEndMachineId(params.getEndMachineId());
+		return orderService.save(order);
+	}
+	
 }

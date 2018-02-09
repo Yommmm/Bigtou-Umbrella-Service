@@ -42,4 +42,11 @@ public class MachineController {
 		logger.info("out params : {}", JSONObject.toJSON(params).toString());
 		return machineService.takeOutUmbrella(params);
 	}
+	
+	@PostMapping(value = "/returnUmbrella")
+	public Object returnUmbrella(@RequestBody UmbrellaOrder params) {
+		logger.info("umbrella params : {}", JSONObject.toJSON(params).toString());
+		return machineService.returnUmbrella(params);
+	}
+	
 }

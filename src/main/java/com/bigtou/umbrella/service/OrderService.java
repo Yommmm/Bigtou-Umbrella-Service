@@ -33,6 +33,11 @@ public class OrderService {
 		return orderRepository.queryUmbrellaOrderByBeginMachineIdOrderByCreateTimeDesc(machineId).get(0);
 	}
 	
+	public UmbrellaOrder queryOrderByUmbrellaId(String umbrellaId) {
+		return orderRepository.queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(umbrellaId).get(0);
+	}
+	
+	
 	public UmbrellaOrder save(UmbrellaOrder umbrellaOrder) {
 		return orderRepository.save(umbrellaOrder);
 	}
