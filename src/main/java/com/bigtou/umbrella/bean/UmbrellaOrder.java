@@ -13,7 +13,7 @@ public class UmbrellaOrder {
 	private String orderId; 
 	
 	@Column(name = "UMBRELLA_ID")
-	private String umbrellaId;
+	private String umbrellaRfid;
 	
 	@Column(name = "UMBRELLA_TYPE")
 	private String umbrellaType;
@@ -53,12 +53,12 @@ public class UmbrellaOrder {
 		this.orderId = orderId;
 	}
 
-	public String getUmbrellaId() {
-		return umbrellaId;
+	public String getUmbrellaRfid() {
+		return umbrellaRfid;
 	}
 
-	public void setUmbrellaId(String umbrellaId) {
-		this.umbrellaId = umbrellaId;
+	public void setUmbrellaRfid(String umbrellaRfid) {
+		this.umbrellaRfid = umbrellaRfid;
 	}
 
 	public String getUmbrellaType() {

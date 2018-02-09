@@ -34,7 +34,7 @@ public class OrderService {
 	}
 	
 	public UmbrellaOrder queryOrderByUmbrellaId(String umbrellaId) {
-		return orderRepository.queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(umbrellaId).get(0);
+		return orderRepository.queryUmbrellaOrderByUmbrellaRfidOrderByCreateTimeDesc(umbrellaId).get(0);
 	}
 	
 	

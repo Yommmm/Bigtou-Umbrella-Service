@@ -40,13 +40,14 @@ public class MachineService {
 	public Object takeOutUmbrella(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String sjFlag = params.getSjFlag();
-		String umbrellaId = params.getUmbrellaId();
+		String umbrellaId = params.getUmbrellaRfid();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		if(!"".equals(sjFlag)) {
 			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败
 			umbrellaOrder.setSjFlag(sjFlag);
 			if(null != umbrellaId && !"".equals(umbrellaId)) {
-				umbrellaOrder.setUmbrellaId(umbrellaId);
+				umbrellaOrder.setUmbrellaRfid(umbrellaId);
+				umbrellaOrder.setCsFlag("0");
 				umbrellaOrder.setBeginTime(new Date());
 			}
 			return orderService.save(umbrellaOrder);
@@ -57,7 +58,7 @@ public class MachineService {
 	}
 	
 	public Object returnUmbrella(UmbrellaOrder params) {
-		String umbrellaId = params.getUmbrellaId();
+		String umbrellaId = params.getUmbrellaRfid();
 		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
 		order.setEndTime(new Date());
 		order.setEndMachineId(params.getEndMachineId());
