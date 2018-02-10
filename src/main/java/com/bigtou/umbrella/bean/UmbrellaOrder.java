@@ -13,7 +13,7 @@ public class UmbrellaOrder {
 	private String orderId; 
 	
 	@Column(name = "UMBRELLA_ID")
-	private String umbrellaRfid;
+	private String umbrellaId;
 	
 	@Column(name = "UMBRELLA_TYPE")
 	private String umbrellaType;
@@ -45,6 +45,9 @@ public class UmbrellaOrder {
 	@Column(name = "CREATE_TIME")
 	private Date createTime;
 	
+	@Column(name = "STATUS")
+	private String status;
+	
 	public String getOrderId() {
 		return orderId;
 	}
@@ -53,12 +56,12 @@ public class UmbrellaOrder {
 		this.orderId = orderId;
 	}
 
-	public String getUmbrellaRfid() {
-		return umbrellaRfid;
+	public String getUmbrellaId() {
+		return umbrellaId;
 	}
 
-	public void setUmbrellaRfid(String umbrellaRfid) {
-		this.umbrellaRfid = umbrellaRfid;
+	public void setUmbrellaId(String umbrellaId) {
+		this.umbrellaId = umbrellaId;
 	}
 
 	public String getUmbrellaType() {
@@ -141,4 +144,12 @@ public class UmbrellaOrder {
 		this.createTime = createTime;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

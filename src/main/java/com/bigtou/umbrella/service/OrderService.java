@@ -25,6 +25,7 @@ public class OrderService {
 		order.setCsFlag(params.getCsFlag());
 		// 出伞类型
 		order.setUmbrellaType(params.getUmbrellaType());
+		order.setStatus("start");
 		order.setCreateTime(new Date());
 		return orderRepository.save(order);
 	}
@@ -34,7 +35,7 @@ public class OrderService {
 	}
 	
 	public UmbrellaOrder queryOrderByUmbrellaId(String umbrellaId) {
-		return orderRepository.queryUmbrellaOrderByUmbrellaRfidOrderByCreateTimeDesc(umbrellaId).get(0);
+		return orderRepository.queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(umbrellaId).get(0);
 	}
 	
 	

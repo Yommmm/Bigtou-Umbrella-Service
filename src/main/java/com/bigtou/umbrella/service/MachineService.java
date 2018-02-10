@@ -31,8 +31,8 @@ public class MachineService {
 			umbrellaOrder.setMachineIP(machineIP);
 			return orderService.save(umbrellaOrder);
 		} else {
-			Map<String, String> result = new HashMap<>();
-			result.put("resultCode", "预出伞失败！");
+			UmbrellaOrder result = new UmbrellaOrder();
+			result.setCsFlag("0");
 			return result;
 		}
 	}
@@ -40,15 +40,16 @@ public class MachineService {
 	public Object takeOutUmbrella(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String sjFlag = params.getSjFlag();
-		String umbrellaId = params.getUmbrellaRfid();
+		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		if(!"".equals(sjFlag)) {
 			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败
 			umbrellaOrder.setSjFlag(sjFlag);
 			if(null != umbrellaId && !"".equals(umbrellaId)) {
-				umbrellaOrder.setUmbrellaRfid(umbrellaId);
+				umbrellaOrder.setUmbrellaId(umbrellaId);
 				umbrellaOrder.setCsFlag("0");
 				umbrellaOrder.setBeginTime(new Date());
+				umbrellaOrder.setStatus("finish");
 			}
 			return orderService.save(umbrellaOrder);
 		}
@@ -58,7 +59,7 @@ public class MachineService {
 	}
 	
 	public Object returnUmbrella(UmbrellaOrder params) {
-		String umbrellaId = params.getUmbrellaRfid();
+		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
 		order.setEndTime(new Date());
 		order.setEndMachineId(params.getEndMachineId());

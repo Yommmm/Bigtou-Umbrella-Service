@@ -12,5 +12,5 @@ public interface OrderRepository extends JpaRepository<UmbrellaOrder, Long> {
 
 	List<UmbrellaOrder> queryUmbrellaOrderByBeginMachineIdOrderByCreateTimeDesc(String beginMachineId);
 	
-	List<UmbrellaOrder> queryUmbrellaOrderByUmbrellaRfidOrderByCreateTimeDesc(String umbrellaId);
+	List<UmbrellaOrder> queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(String umbrellaId);
 }
