@@ -1,8 +1,12 @@
 package com.bigtou.umbrella.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +34,14 @@ public class OrderController {
 	public UmbrellaOrder saveOrder(@RequestBody UmbrellaOrder params) {
 		logger.info("save order : {}", JSONObject.toJSON(params).toString());
 		return orderService.saveOrder(params);
+	}
+	
+	@GetMapping("/queryAllOrder/{secret}")
+	public List<UmbrellaOrder> allOrder(@PathVariable("secret") String secret ) {
+		if(secret.equalsIgnoreCase("qwertyuiop")) {
+			return orderService.queryAll();
+		} else {
+			return null;
+		}
 	}
 }

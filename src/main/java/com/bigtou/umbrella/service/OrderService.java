@@ -1,6 +1,7 @@
 package com.bigtou.umbrella.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +47,11 @@ public class OrderService {
 		return orderRepository.queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(umbrellaId).get(0);
 	}
 	
-	
 	public UmbrellaOrder save(UmbrellaOrder umbrellaOrder) {
 		return orderRepository.save(umbrellaOrder);
+	}
+	
+	public List<UmbrellaOrder> queryAll() {
+		return orderRepository.findAll();
 	}
 }
