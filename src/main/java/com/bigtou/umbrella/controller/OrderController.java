@@ -34,6 +34,7 @@ public class OrderController {
 	@PostMapping
 	public UmbrellaOrder saveOrder(@RequestBody UmbrellaOrder params) {
 		logger.info("save order : {}", JSONObject.toJSON(params).toString());
+		System.out.println("订单创建参数：" + JSONObject.toJSON(params).toString());
 		return orderService.saveOrder(params);
 	}
 	

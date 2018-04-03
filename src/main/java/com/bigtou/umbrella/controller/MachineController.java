@@ -40,12 +40,14 @@ public class MachineController {
 	@PostMapping(value = "/takeOutUmbrella")
 	public Object takeOutUmbrella(@RequestBody UmbrellaOrder params) {
 		logger.info("out params : {}", JSONObject.toJSON(params).toString());
+		System.out.println("出伞参数：" + JSONObject.toJSON(params).toString());
 		return machineService.takeOutUmbrella(params);
 	}
 	
 	@PostMapping(value = "/returnUmbrella")
 	public Object returnUmbrella(@RequestBody UmbrellaOrder params) {
 		logger.info("umbrella params : {}", JSONObject.toJSON(params).toString());
+		System.out.println("还伞参数：" + JSONObject.toJSON(params).toString());
 		return machineService.returnUmbrella(params);
 	}
 	
