@@ -1,5 +1,7 @@
 package com.bigtou.umbrella.controller;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +42,14 @@ public class MachineController {
 	@PostMapping(value = "/takeOutUmbrella")
 	public Object takeOutUmbrella(@RequestBody UmbrellaOrder params) {
 		logger.info("out params : {}", JSONObject.toJSON(params).toString());
-		System.out.println("出伞参数：" + JSONObject.toJSON(params).toString());
+		System.out.println("出伞参数：" + JSONObject.toJSON(params).toString() + " " + new Date());
 		return machineService.takeOutUmbrella(params);
 	}
 	
 	@PostMapping(value = "/returnUmbrella")
 	public Object returnUmbrella(@RequestBody UmbrellaOrder params) {
 		logger.info("umbrella params : {}", JSONObject.toJSON(params).toString());
-		System.out.println("还伞参数：" + JSONObject.toJSON(params).toString());
+		System.out.println("还伞参数：" + JSONObject.toJSON(params).toString() + " " + new Date());
 		return machineService.returnUmbrella(params);
 	}
 	

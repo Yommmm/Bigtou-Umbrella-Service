@@ -1,5 +1,6 @@
 package com.bigtou.umbrella.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class OrderController {
 	@PostMapping
 	public UmbrellaOrder saveOrder(@RequestBody UmbrellaOrder params) {
 		logger.info("save order : {}", JSONObject.toJSON(params).toString());
-		System.out.println("订单创建参数：" + JSONObject.toJSON(params).toString());
+		System.out.println("订单创建参数：" + JSONObject.toJSON(params).toString() + " " + new Date());
 		return orderService.saveOrder(params);
 	}
 	
