@@ -40,7 +40,7 @@ public class OrderService {
 	}
 
 	public UmbrellaOrder queryOrderByMachineId(String machineId) {
-		return orderRepository.queryUmbrellaOrderByBeginMachineIdOrderByCreateTimeDesc(machineId).get(0);
+		return orderRepository.queryUmbrellaOrderByBeginMachineIdAndCsFlagOrderByCreateTimeDesc(machineId, "1").get(0);
 	}
 	
 	public UmbrellaOrder queryOrderByUmbrellaId(String umbrellaId) {

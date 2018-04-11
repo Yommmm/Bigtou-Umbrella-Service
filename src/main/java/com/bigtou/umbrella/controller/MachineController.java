@@ -30,7 +30,7 @@ public class MachineController {
 	 */
 	@PostMapping(value = "/heartbeat")
 	public Object heartBeat(@RequestBody UmbrellaOrder params) {
-		logger.info("save order : {}", JSONObject.toJSON(params).toString());
+		logger.info("heartbeat : {}", JSONObject.toJSON(params).toString());
 		return machineService.heartbeat(params);
 	}
 	

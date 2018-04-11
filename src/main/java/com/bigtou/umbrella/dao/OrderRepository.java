@@ -10,7 +10,7 @@ import com.bigtou.umbrella.bean.UmbrellaOrder;
 @Repository
 public interface OrderRepository extends JpaRepository<UmbrellaOrder, Long> {
 
-	List<UmbrellaOrder> queryUmbrellaOrderByBeginMachineIdOrderByCreateTimeDesc(String beginMachineId);
+	List<UmbrellaOrder> queryUmbrellaOrderByBeginMachineIdAndCsFlagOrderByCreateTimeDesc(String beginMachineId, String csFlag);
 	
 	List<UmbrellaOrder> queryUmbrellaOrderByUmbrellaIdOrderByCreateTimeDesc(String umbrellaId);
 }
