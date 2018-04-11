@@ -151,5 +151,13 @@ public class UmbrellaOrder {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "UmbrellaOrder [orderId=" + orderId + ", umbrellaId=" + umbrellaId + ", umbrellaType=" + umbrellaType
+				+ ", csFlag=" + csFlag + ", sjFlag=" + sjFlag + ", beginTime=" + beginTime + ", endTime=" + endTime
+				+ ", beginMachineId=" + beginMachineId + ", endMachineId=" + endMachineId + ", machineIP=" + machineIP
+				+ ", userId=" + userId + ", createTime=" + createTime + ", status=" + status + "]";
+	}
 	
 }

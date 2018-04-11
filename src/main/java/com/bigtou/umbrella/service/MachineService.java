@@ -51,10 +51,13 @@ public class MachineService {
 				umbrellaOrder.setBeginTime(new Date());
 				umbrellaOrder.setStatus("finish");
 			}
-			return orderService.save(umbrellaOrder);
+			umbrellaOrder = orderService.save(umbrellaOrder);
+			System.out.println(umbrellaOrder.toString());
+			return umbrellaOrder;
 		}
 		Map<String, String> result = new HashMap<>();
 		result.put("resultCode", "出伞失败！");
+		System.out.println("出伞失败！");
 		return result;
 	}
 	
