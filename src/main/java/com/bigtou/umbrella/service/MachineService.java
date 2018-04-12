@@ -64,6 +64,7 @@ public class MachineService {
 	public Object returnUmbrella(UmbrellaOrder params) {
 		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
+		order.setStatus("return");
 		order.setEndTime(new Date());
 		order.setEndMachineId(params.getEndMachineId());
 		return orderService.save(order);
