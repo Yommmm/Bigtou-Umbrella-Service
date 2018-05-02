@@ -20,7 +20,7 @@ public class MachineService {
 	@Autowired
 	private HttpServletRequest request;
 
-	public Object heartbeat(UmbrellaOrder params) {
+	public String heartbeat(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String machineIP = request.getRemoteAddr();
 		String sjFlag = params.getSjFlag();
