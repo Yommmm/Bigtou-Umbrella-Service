@@ -29,11 +29,10 @@ public class MachineService {
 		// 伞机状态：0 空闲，出伞状态 1 出伞，条件满足预出伞成功，写入订单
 		if("0".equals(sjFlag) && "1".equals(umbrellaOrder.getCsFlag())) {
 			umbrellaOrder.setMachineIP(machineIP);
-			return orderService.save(umbrellaOrder);
+			orderService.save(umbrellaOrder);
+			return "0";
 		} else {
-			UmbrellaOrder result = new UmbrellaOrder();
-			result.setCsFlag("0");
-			return result;
+			return "1";
 		}
 	}
 	
