@@ -20,19 +20,19 @@ public class MachineService {
 	@Autowired
 	private HttpServletRequest request;
 
-	public String heartbeat(UmbrellaOrder params) {
+	public Object heartbeat(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String machineIP = request.getRemoteAddr();
 		String sjFlag = params.getSjFlag();
 		
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
 		// 伞机状态：0 空闲，出伞状态 1 出伞，条件满足预出伞成功，写入订单
-		if("0".equals(sjFlag) && "1".equals(umbrellaOrder.getCsFlag())) {
+		if(null != umbrellaOrder && "0".equals(sjFlag) && "1".equals(umbrellaOrder.getCsFlag())) {
 			umbrellaOrder.setMachineIP(machineIP);
 			orderService.save(umbrellaOrder);
-			return "0";
+			return orderService.save(umbrellaOrder);
 		} else {
-			return "1";
+			return "0";
 		}
 	}
 	

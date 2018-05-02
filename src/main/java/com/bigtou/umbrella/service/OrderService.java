@@ -40,7 +40,11 @@ public class OrderService {
 	}
 
 	public UmbrellaOrder queryOrderByMachineId(String machineId) {
-		return orderRepository.queryUmbrellaOrderByBeginMachineIdAndCsFlagOrderByCreateTimeDesc(machineId, "1").get(0);
+		List<UmbrellaOrder> umbrellaOrders = orderRepository.queryUmbrellaOrderByBeginMachineIdAndCsFlagOrderByCreateTimeDesc(machineId, "1");
+		if(null != umbrellaOrders && umbrellaOrders.size() > 0) {
+			return umbrellaOrders.get(0);
+		}
+		return null;
 	}
 	
 	public UmbrellaOrder queryOrderByUmbrellaId(String umbrellaId) {

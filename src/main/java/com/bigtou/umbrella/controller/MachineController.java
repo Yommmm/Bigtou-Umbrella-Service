@@ -29,7 +29,7 @@ public class MachineController {
 	 * @return
 	 */
 	@PostMapping(value = "/heartbeat")
-	public String heartBeat(@RequestBody UmbrellaOrder params) {
+	public Object heartBeat(@RequestBody UmbrellaOrder params) {
 		logger.info("heartbeat : {}", JSONObject.toJSON(params).toString());
 		return machineService.heartbeat(params);
 	}
