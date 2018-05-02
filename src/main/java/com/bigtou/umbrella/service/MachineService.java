@@ -29,7 +29,6 @@ public class MachineService {
 		// 伞机状态：0 空闲，出伞状态 1 出伞，条件满足预出伞成功，写入订单
 		if(null != umbrellaOrder && "0".equals(sjFlag) && "1".equals(umbrellaOrder.getCsFlag())) {
 			umbrellaOrder.setMachineIP(machineIP);
-			orderService.save(umbrellaOrder);
 			return orderService.save(umbrellaOrder);
 		} else {
 			return "0";
