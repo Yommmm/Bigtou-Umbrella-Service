@@ -21,6 +21,13 @@ public class UmbrellaOrder {
 	@Column(name = "CS_FLAG")
 	private String csFlag;
 	
+	/**
+	 * 1:出伞状态
+	 * 2:出伞成功
+	 * 3:出伞失败
+	 * 4:还伞成功
+	 * 5:还伞失败
+	 */
 	@Column(name = "SJ_FLAG")
 	private String sjFlag;
 	
@@ -45,6 +52,12 @@ public class UmbrellaOrder {
 	@Column(name = "CREATE_TIME")
 	private Date createTime;
 	
+	/**
+	 * start 订单开始
+	 * doing 订单作业中
+	 * finfish 订单处理完成
+	 * return 订单已还伞
+	 */
 	@Column(name = "STATUS")
 	private String status;
 	

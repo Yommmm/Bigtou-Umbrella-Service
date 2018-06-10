@@ -47,24 +47,31 @@ public class MachineService {
 				umbrellaOrder.setUmbrellaId(umbrellaId);
 				umbrellaOrder.setCsFlag("0");
 				umbrellaOrder.setBeginTime(new Date());
-				umbrellaOrder.setStatus("finish");
+				if("3".equals(sjFlag)) {
+					umbrellaOrder.setStatus("doing");
+				} else {
+					umbrellaOrder.setStatus("finish");
+				}
 			}
 			umbrellaOrder = orderService.save(umbrellaOrder);
 			System.out.println(umbrellaOrder.toString());
 			return umbrellaOrder;
 		}
 		Map<String, String> result = new HashMap<>();
-		result.put("resultCode", "出伞失败！");
+		result.put("resultCode", "伞机状态错误，出伞失败！");
 		System.out.println("出伞失败！");
 		return result;
 	}
 	
 	public Object returnUmbrella(UmbrellaOrder params) {
 		String umbrellaId = params.getUmbrellaId();
+		String sjFlag = params.getSjFlag();
 		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
-		order.setStatus("return");
-		order.setEndTime(new Date());
-		order.setEndMachineId(params.getEndMachineId());
+		if("4".equals(sjFlag)) {
+			order.setStatus("return");
+			order.setEndTime(new Date());
+			order.setEndMachineId(params.getEndMachineId());
+		}
 		return orderService.save(order);
 	}
 	
