@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bigtou.umbrella.bean.MachineUmbrellaNum;
+import com.bigtou.umbrella.bean.MuHistory;
+import com.bigtou.umbrella.dao.MuHistoryRepository;
 import com.bigtou.umbrella.dao.UmbrellaMachineRepository;
+import com.bigtou.umbrella.util.GlobalConstants;
 import com.bigtou.umbrella.vo.Umbrella2Machine;
 import com.bigtou.umbrella.vo.UmbrellaTypeNum;
 
@@ -21,6 +24,9 @@ public class UmbrellaService {
 	@Autowired
 	private UmbrellaMachineRepository umbrellaMachineRepository;
 	
+	@Autowired
+	private MuHistoryRepository muHistoryRepository;
+	
 	/**
 	 * 保存机器-伞型-存放信息
 	 * @param umbrella2Machine
@@ -30,7 +36,9 @@ public class UmbrellaService {
 		List<UmbrellaTypeNum> umbrellaList = umbrella2Machine.getUmbrellaList();
 		String machineId = umbrella2Machine.getMachineId();
 		
+		// 保存操作人员操作存放信息
 		for(UmbrellaTypeNum umbrellaTypeNum : umbrellaList) {
+			// 当前是否有存放信息，Y-更新，N-新增
 			MachineUmbrellaNum machineUmbrellaNum = umbrellaMachineRepository.queryMachineUmbrellaNumByMachineIdAndUmbrellaType(machineId, umbrellaTypeNum.getUmbrellaType());
 			if(null == machineUmbrellaNum) {
 				machineUmbrellaNum = new MachineUmbrellaNum();
@@ -38,8 +46,17 @@ public class UmbrellaService {
 			}
 			machineUmbrellaNum.setMachineId(machineId);
 			machineUmbrellaNum.setUmbrellaType(umbrellaTypeNum.getUmbrellaType());
-			machineUmbrellaNum.setUmbrellaNum(umbrellaTypeNum.getUmbrellaNum());
-			umbrellaMachineRepository.save(machineUmbrellaNum);
+			machineUmbrellaNum.setUmbrellaNum(umbrellaTypeNum.getUmbrellaNum() + machineUmbrellaNum.getUmbrellaNum());
+			machineUmbrellaNum = umbrellaMachineRepository.save(machineUmbrellaNum);
+			
+			// 保存存放日志
+			MuHistory muHistory = new MuHistory();
+			muHistory.setMuHistoryId(UUID.randomUUID().toString());
+			muHistory.setMachineId(machineId);
+			muHistory.setUmbrellaType(machineUmbrellaNum.getMachineId());
+			muHistory.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum());
+			muHistory.setOperateType(GlobalConstants.OPERATE_TYPE_OPERATE);
+			muHistoryRepository.save(muHistory);
 		}
 		
 		return umbrellaMachineRepository.queryMachineUmbrellaNumByMachineId(machineId);

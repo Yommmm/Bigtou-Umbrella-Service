@@ -22,7 +22,7 @@ public class MachineUmbrellaNum {
 	@Column(name = "UMBRELLA_TYPE")
 	private String umbrellaType;
 	
-	@Column(name = "MUID")
+	@Column(name = "UMBRELLA_NUM")
 	private Double umbrellaNum;
 
 	public String getMuId() {

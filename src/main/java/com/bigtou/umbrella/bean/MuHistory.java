@@ -23,8 +23,13 @@ public class MuHistory {
 	private String umbrellaType;
 	
 	@Column(name = "UMBRELLA_NUM")
-	private String umbrellaNum;
+	private Double umbrellaNum;
 	
+	/**
+	 * 工作人员操作 | Operate
+	 * 出伞                | Out
+	 * 还伞                | In
+	 */
 	@Column(name = "OPERATE_TYPE")
 	private String operateType;
 
@@ -60,11 +65,11 @@ public class MuHistory {
 		this.umbrellaType = umbrellaType;
 	}
 
-	public String getUmbrellaNum() {
+	public Double getUmbrellaNum() {
 		return umbrellaNum;
 	}
 
-	public void setUmbrellaNum(String umbrellaNum) {
+	public void setUmbrellaNum(Double umbrellaNum) {
 		this.umbrellaNum = umbrellaNum;
 	}
 
