@@ -1,5 +1,7 @@
 package com.bigtou.umbrella.bean;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,6 +34,9 @@ public class MuHistory {
 	 */
 	@Column(name = "OPERATE_TYPE")
 	private String operateType;
+	
+	@Column(name = "OPERATE_DATE")
+	private Date operateDate;
 
 	public String getMachineId() {
 		return machineId;
@@ -71,6 +76,14 @@ public class MuHistory {
 
 	public void setUmbrellaNum(Double umbrellaNum) {
 		this.umbrellaNum = umbrellaNum;
+	}
+
+	public Date getOperateDate() {
+		return operateDate;
+	}
+
+	public void setOperateDate(Date operateDate) {
+		this.operateDate = operateDate;
 	}
 
 }

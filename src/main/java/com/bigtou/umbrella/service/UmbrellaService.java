@@ -1,5 +1,6 @@
 package com.bigtou.umbrella.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,6 +57,7 @@ public class UmbrellaService {
 			muHistory.setUmbrellaType(machineUmbrellaNum.getMachineId());
 			muHistory.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum());
 			muHistory.setOperateType(GlobalConstants.OPERATE_TYPE_OPERATE);
+			muHistory.setOperateDate(new Date());
 			muHistoryRepository.save(muHistory);
 		}
 		

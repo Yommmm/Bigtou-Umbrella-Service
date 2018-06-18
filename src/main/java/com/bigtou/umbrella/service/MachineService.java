@@ -3,6 +3,7 @@ package com.bigtou.umbrella.service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bigtou.umbrella.bean.MachineUmbrellaNum;
+import com.bigtou.umbrella.bean.MuHistory;
 import com.bigtou.umbrella.bean.UmbrellaOrder;
+import com.bigtou.umbrella.dao.MuHistoryRepository;
 import com.bigtou.umbrella.dao.UmbrellaMachineRepository;
+import com.bigtou.umbrella.util.GlobalConstants;
 
 @Service
 public class MachineService {
@@ -24,6 +28,9 @@ public class MachineService {
 
 	@Autowired
 	private UmbrellaMachineRepository umbrellaMachineRepository;
+	
+	@Autowired
+	private MuHistoryRepository muHistoryRepository;
 	
 	public Object heartbeat(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
@@ -56,10 +63,22 @@ public class MachineService {
 					umbrellaOrder.setStatus("doing");
 				} else {
 					umbrellaOrder.setStatus("finish");
+					// 操作库存信息
 					MachineUmbrellaNum machineUmbrellaNum = umbrellaMachineRepository.queryMachineUmbrellaNumByMachineIdAndUmbrellaType(machineId, params.getUmbrellaType());
 					if(null != machineUmbrellaNum && null != machineUmbrellaNum.getUmbrellaNum() && 0 < machineUmbrellaNum.getUmbrellaNum()) {
+						// 出伞删减库存
 						machineUmbrellaNum.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum() - 1);
 						umbrellaMachineRepository.save(machineUmbrellaNum);
+						
+						// 记录库存日志
+						MuHistory muHistory = new MuHistory();
+						muHistory.setMuHistoryId(UUID.randomUUID().toString());
+						muHistory.setMachineId(machineId);
+						muHistory.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum());
+						muHistory.setOperateType(GlobalConstants.OPERATE_TYPE_OUT);
+						muHistory.setUmbrellaType(machineUmbrellaNum.getUmbrellaType());
+						muHistory.setOperateDate(new Date());
+						muHistoryRepository.save(muHistory);
 					}
 				}
 			}
@@ -85,6 +104,16 @@ public class MachineService {
 			if(null != machineUmbrellaNum && null != machineUmbrellaNum.getUmbrellaNum() && 0 < machineUmbrellaNum.getUmbrellaNum()) {
 				machineUmbrellaNum.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum() + 1);
 				umbrellaMachineRepository.save(machineUmbrellaNum);
+				
+				// 记录库存日志
+				MuHistory muHistory = new MuHistory();
+				muHistory.setMuHistoryId(UUID.randomUUID().toString());
+				muHistory.setMachineId(params.getEndMachineId());
+				muHistory.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum());
+				muHistory.setOperateType(GlobalConstants.OPERATE_TYPE_IN);
+				muHistory.setUmbrellaType(machineUmbrellaNum.getUmbrellaType());
+				muHistory.setOperateDate(new Date());
+				muHistoryRepository.save(muHistory);
 			}
 		}
 		return orderService.save(order);
