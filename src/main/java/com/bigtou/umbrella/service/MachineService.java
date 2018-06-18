@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bigtou.umbrella.bean.MachineUmbrellaNum;
 import com.bigtou.umbrella.bean.UmbrellaOrder;
+import com.bigtou.umbrella.dao.UmbrellaMachineRepository;
 
 @Service
 public class MachineService {
@@ -20,6 +22,9 @@ public class MachineService {
 	@Autowired
 	private HttpServletRequest request;
 
+	@Autowired
+	private UmbrellaMachineRepository umbrellaMachineRepository;
+	
 	public Object heartbeat(UmbrellaOrder params) {
 		String machineId = params.getBeginMachineId();
 		String machineIP = request.getRemoteAddr();
@@ -51,6 +56,11 @@ public class MachineService {
 					umbrellaOrder.setStatus("doing");
 				} else {
 					umbrellaOrder.setStatus("finish");
+					MachineUmbrellaNum machineUmbrellaNum = umbrellaMachineRepository.queryMachineUmbrellaNumByMachineIdAndUmbrellaType(machineId, params.getUmbrellaType());
+					if(null != machineUmbrellaNum && null != machineUmbrellaNum.getUmbrellaNum() && 0 < machineUmbrellaNum.getUmbrellaNum()) {
+						machineUmbrellaNum.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum() - 1);
+						umbrellaMachineRepository.save(machineUmbrellaNum);
+					}
 				}
 			}
 			umbrellaOrder = orderService.save(umbrellaOrder);
@@ -71,6 +81,11 @@ public class MachineService {
 			order.setStatus("return");
 			order.setEndTime(new Date());
 			order.setEndMachineId(params.getEndMachineId());
+			MachineUmbrellaNum machineUmbrellaNum = umbrellaMachineRepository.queryMachineUmbrellaNumByMachineIdAndUmbrellaType(params.getEndMachineId(), params.getUmbrellaType());
+			if(null != machineUmbrellaNum && null != machineUmbrellaNum.getUmbrellaNum() && 0 < machineUmbrellaNum.getUmbrellaNum()) {
+				machineUmbrellaNum.setUmbrellaNum(machineUmbrellaNum.getUmbrellaNum() + 1);
+				umbrellaMachineRepository.save(machineUmbrellaNum);
+			}
 		}
 		return orderService.save(order);
 	}
