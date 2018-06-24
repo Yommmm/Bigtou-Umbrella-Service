@@ -43,20 +43,18 @@ public class FileService {
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	public Object uploadApkFile(String version, MultipartFile file) throws IllegalStateException, IOException {
+	public Object uploadApkFile(ApkFileInfo apkFileInfo, MultipartFile file) throws IllegalStateException, IOException {
 		logger.info(file.getName());
 		logger.info(file.getOriginalFilename());
 		System.out.println(file.getSize());
 		
-		File localFile = new File(folder, "bigtou_" + version + "_" + new Date().getTime() + ".apk");
+		File localFile = new File(folder, "bigtou_" + apkFileInfo.getVersion() + "_" + new Date().getTime() + ".apk");
 		file.transferTo(localFile);
 		String location = localFile.getAbsolutePath();
 		
-		ApkFileInfo apkFileInfo = new ApkFileInfo();
 		apkFileInfo.setFileName(localFile.getName());
 		apkFileInfo.setLocation(location);
 		apkFileInfo.setUploadTime(new Date());
-		apkFileInfo.setVersion(version);
 		apkFileInfo = fileRepository.save(apkFileInfo);
 		
 		return apkFileInfo;

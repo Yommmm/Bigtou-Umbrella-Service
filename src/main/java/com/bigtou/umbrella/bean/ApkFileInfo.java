@@ -29,6 +29,12 @@ public class ApkFileInfo {
 	
 	@Column(name = "UPLOAD_TIME")
 	private Date uploadTime;
+	
+	@Column(name = "UPGRADE_REASON")
+	private String upgradeReason;
+	
+	@Column(name = "REMARK")
+	private String remark;
 
 	public String getFileId() {
 		return fileId;

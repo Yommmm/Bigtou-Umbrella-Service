@@ -15,3 +15,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+  http: 
+    multipart: 
+      maxFileSize: 100Mb
+      maxRequestSize: 100Mb
