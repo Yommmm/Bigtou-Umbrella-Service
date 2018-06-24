@@ -60,4 +60,12 @@ public class FileService {
 		return apkFileInfo;
 	}
 	
+	/**
+	 * 查询所有文件列表
+	 * @return
+	 */
+	public Object queryFileList() {
+		return fileRepository.queryLatestVersion();
+	}
+	
 }

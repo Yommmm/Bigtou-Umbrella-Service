@@ -40,6 +40,13 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 
+	/**
+	 * APK下载
+	 * @param version
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
 	@GetMapping("/appVersion")
 	public void download1(@RequestParam(name = "version", required = false) String version, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -59,9 +66,26 @@ public class FileController {
 		}
 	}
 	
+	/**
+	 * APK文件上传
+	 * @param apkFileInfo
+	 * @param file
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
 	@PostMapping("/upload")
 	public Object uploadApkFile(ApkFileInfo apkFileInfo, MultipartFile file) throws IllegalStateException, IOException {
 		return fileService.uploadApkFile(apkFileInfo, file);
+	}
+	
+	/**
+	 * 所有版本APK信息
+	 * @return
+	 */
+	@GetMapping("/allVersion")
+	public Object queryAllVersion() {
+		return fileService.queryFileList();
 	}
 	
 }
