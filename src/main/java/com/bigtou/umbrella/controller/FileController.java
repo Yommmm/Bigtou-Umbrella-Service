@@ -1,12 +1,27 @@
 package com.bigtou.umbrella.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.bigtou.umbrella.bean.ApkFileInfo;
+import com.bigtou.umbrella.service.FileService;
 
 /**
  * 文件服务接口
@@ -19,15 +34,33 @@ import org.springframework.web.bind.annotation.RestController;
 public class FileController {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+	
+	private String folder = "F://";
+	
+	@Autowired
+	private FileService fileService;
 
-	@GetMapping("/version")
-	public Object getApkFile(@RequestParam String apkVersion) {
-		return null;
+	@GetMapping("/version/{version}")
+	public void download1(@PathVariable("version") String version, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info(version);
+		
+		ApkFileInfo apkFileInfo = fileService.getApkFileInfo(version);
+		
+		// try后面的括号里面的流会自动关闭
+		try (InputStream inputStream = new FileInputStream(new File(folder, apkFileInfo.getFileName()));
+				OutputStream outputStream = response.getOutputStream();) {
+			
+			response.setContentType("application/x-download");
+			response.addHeader("Content-Disposition", "attachment;filename=" + apkFileInfo.getFileName());
+			
+			IOUtils.copy(inputStream, outputStream);
+			outputStream.flush();
+		}
 	}
 	
-	@PostMapping("/apkFile")
-	public Object uploadApkFile() {
-		return null;
+	@PostMapping("/apkFile/{version}")
+	public Object uploadApkFile(@PathVariable("version") String version, MultipartFile file) throws IllegalStateException, IOException {
+		return fileService.uploadApkFile(version, file);
 	}
 	
 }
