@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,8 +41,9 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 
-	@GetMapping("/version/{version}")
-	public void download1(@PathVariable("version") String version, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@GetMapping("/appVersion")
+	public void download1(@RequestParam(name = "version", required = false) String version, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(version);
 		
 		ApkFileInfo apkFileInfo = fileService.getApkFileInfo(version);

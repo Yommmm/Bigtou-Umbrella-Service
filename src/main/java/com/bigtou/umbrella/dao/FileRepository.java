@@ -13,7 +13,7 @@ public interface FileRepository extends JpaRepository<ApkFileInfo, String> {
 
 	List<ApkFileInfo> queryApkFileInfoByVersionOrderByUploadTimeDesc(String version);
 	
-	@Query(value = "select t from ApkFileInfo t order by uploadTime")
+	@Query(value = "SELECT t.* from APK_FILE_INFO t ORDER BY UPLOAD_TIME DESC", nativeQuery = true)
 	List<ApkFileInfo> queryLatestVersion();
 	
 }
