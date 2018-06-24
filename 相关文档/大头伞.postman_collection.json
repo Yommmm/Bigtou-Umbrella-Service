@@ -1,0 +1,99 @@
+{
+	"id": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+	"name": "大头伞",
+	"description": "",
+	"order": [
+		"6a90078c-aeaf-3e1e-9672-27dfa784b332",
+		"303ce7ca-3d08-932d-19e1-96dc33672afa",
+		"4ab7bbd5-dfaf-6039-6850-1e5f22e63f58"
+	],
+	"folders": [],
+	"timestamp": 1529849337089,
+	"owner": "1828769",
+	"public": false,
+	"requests": [
+		{
+			"id": "303ce7ca-3d08-932d-19e1-96dc33672afa",
+			"headers": "",
+			"url": "http://120.79.25.125:8189/bigtou/file/allVersion",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"data": null,
+			"dataMode": "params",
+			"name": "查询所有APK信息",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1529852196723,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "4ab7bbd5-dfaf-6039-6850-1e5f22e63f58",
+			"headers": "",
+			"url": "http://120.79.25.125:8189/bigtou/file/appVersion?version=2",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"data": null,
+			"dataMode": "params",
+			"name": "下载最新版本APK",
+			"description": "http://120.79.25.125:8189/bigtou/file/appVersion?version=2\n\n不带version下载最新版本，带version下载指定版本",
+			"descriptionFormat": "html",
+			"time": 1529852387527,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "6a90078c-aeaf-3e1e-9672-27dfa784b332",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "http://120.79.25.125:8189/bigtou/file/upload",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "file",
+					"value": "app-release.apk",
+					"type": "file",
+					"enabled": true
+				},
+				{
+					"key": "remark",
+					"value": "9999",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "version",
+					"value": "2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "upgradeReason",
+					"value": "789",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1529851891021,
+			"name": "上传APK文件",
+			"description": "",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"responses": []
+		}
+	]
+}
