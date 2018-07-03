@@ -71,6 +71,9 @@ public class UmbrellaService {
 	 * @return
 	 */
 	public Object getMachineUmbrellaTypeNum(String machineId, String umbrellaType) {
+		if(null == umbrellaType || "".equals(umbrellaType)) {
+			return umbrellaMachineRepository.queryMachineUmbrellaNumByMachineId(machineId);
+		}
 		return umbrellaMachineRepository.queryMachineUmbrellaNumByMachineIdAndUmbrellaType(machineId, umbrellaType);
 	}
 	
