@@ -5,13 +5,36 @@
 	"order": [
 		"6a90078c-aeaf-3e1e-9672-27dfa784b332",
 		"303ce7ca-3d08-932d-19e1-96dc33672afa",
-		"4ab7bbd5-dfaf-6039-6850-1e5f22e63f58"
+		"4ab7bbd5-dfaf-6039-6850-1e5f22e63f58",
+		"c688ec77-4992-8c41-83dd-1a441586c82e",
+		"99ff6897-228d-3f6e-b68f-496c4400886e",
+		"01e16029-c277-0d30-554d-b008daf79de7"
 	],
 	"folders": [],
 	"timestamp": 1529849337089,
 	"owner": "1828769",
 	"public": false,
 	"requests": [
+		{
+			"id": "01e16029-c277-0d30-554d-b008daf79de7",
+			"headers": "",
+			"url": "http://120.79.25.125:8189/bigtou/umbrella/machineAndType?machineId=123456789&umbrellaType=bugfix test",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"data": null,
+			"dataMode": "params",
+			"name": "根据【机器】【伞型】查询【伞数量】接口",
+			"description": "机器ID必填，伞型选填",
+			"descriptionFormat": "html",
+			"time": 1530963944428,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
 		{
 			"id": "303ce7ca-3d08-932d-19e1-96dc33672afa",
 			"headers": "",
@@ -67,20 +90,8 @@
 					"enabled": true
 				},
 				{
-					"key": "remark",
-					"value": "9999",
-					"type": "text",
-					"enabled": true
-				},
-				{
 					"key": "version",
 					"value": "2",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "upgradeReason",
-					"value": "789",
 					"type": "text",
 					"enabled": true
 				}
@@ -89,11 +100,53 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1529851891021,
+			"time": 1530962746276,
 			"name": "上传APK文件",
 			"description": "",
 			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
 			"responses": []
+		},
+		{
+			"id": "99ff6897-228d-3f6e-b68f-496c4400886e",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://120.79.25.125:8189/bigtou/umbrella/machineOperate",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"data": [],
+			"dataMode": "raw",
+			"name": "工作人员操作-加伞接口",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1530963749200,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"machineId\": \"123456789\",\n\t\"umbrellaList\": [\n\t\t{\n\t\t\t\"umbrellaType\": \"bugfix test\",\n\t\t\t\"umbrellaNum\": 12\n\t\t}\n\t]\n}"
+		},
+		{
+			"id": "c688ec77-4992-8c41-83dd-1a441586c82e",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://120.79.25.125:8189/bigtou/machine/takeOutUmbrella",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "2dbb97da-3c5f-08a6-78dc-1b86f26cbb67",
+			"data": [],
+			"dataMode": "raw",
+			"name": "出伞",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1530962826400,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"beginMachineId\": \"123456789\",\n\t\"umbrellaId\": \"987654321\", \n\t\"sjFlag\": \"2\"\n}\n"
 		}
 	]
 }
