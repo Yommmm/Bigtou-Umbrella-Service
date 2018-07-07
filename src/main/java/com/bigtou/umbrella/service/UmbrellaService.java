@@ -47,7 +47,7 @@ public class UmbrellaService {
 			}
 			machineUmbrellaNum.setMachineId(machineId);
 			machineUmbrellaNum.setUmbrellaType(umbrellaTypeNum.getUmbrellaType());
-			machineUmbrellaNum.setUmbrellaNum(umbrellaTypeNum.getUmbrellaNum() + machineUmbrellaNum.getUmbrellaNum());
+			machineUmbrellaNum.setUmbrellaNum(umbrellaTypeNum.getUmbrellaNum() + (null == machineUmbrellaNum.getUmbrellaNum() ? 0 : machineUmbrellaNum.getUmbrellaNum()));
 			machineUmbrellaNum = umbrellaMachineRepository.save(machineUmbrellaNum);
 			
 			// 保存存放日志
