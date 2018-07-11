@@ -52,6 +52,9 @@ public class MachineService {
 		String sjFlag = params.getSjFlag();
 		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
+		if("doing".equals(umbrellaOrder.getStatus())) {
+			throw new RuntimeException("机器出伞失败！请等待小程序退款！");
+		}
 		if(!"".equals(sjFlag)) {
 			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败
 			umbrellaOrder.setSjFlag(sjFlag);

@@ -51,7 +51,7 @@ public class MachineController {
 			logger.error("出伞失败！");
 			logger.error(e.getMessage());
 			Map<String, String> errorInfo = new HashMap<>();
-			errorInfo.put("resultCode", "出伞失败！请确认订单信息及机器状态！");
+			errorInfo.put("resultCode", "出伞失败！请工作人员确认订单信息及机器状态！请等待小程序退款！");
 			return errorInfo;
 		}
 	}
