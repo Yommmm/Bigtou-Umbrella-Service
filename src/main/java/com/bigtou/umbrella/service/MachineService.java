@@ -47,23 +47,29 @@ public class MachineService {
 		}
 	}
 	
-	public Object takeOutUmbrella(UmbrellaOrder params) {
+	public Object takeOutUmbrella(UmbrellaOrder params) throws Exception {
 		String machineId = params.getBeginMachineId();
 		String sjFlag = params.getSjFlag();
 		String umbrellaId = params.getUmbrellaId();
 		UmbrellaOrder umbrellaOrder = orderService.queryOrderByMachineId(machineId);
-		if("doing".equals(umbrellaOrder.getStatus())) {
-			throw new RuntimeException("机器出伞失败！请等待小程序退款！");
+		if("fail".equals(umbrellaOrder.getStatus())) {
+			throw new Exception("机器出伞失败！请等待小程序退款！");
 		}
 		if(!"".equals(sjFlag)) {
-			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败
+			//sjFlag——1:出伞状态,2:出伞成功,3:出伞失败,4:出伞成功后，还伞使用
 			umbrellaOrder.setSjFlag(sjFlag);
+			if("3".equals(sjFlag)) {
+				// mofify csFlag -> 4 machine no action
+				umbrellaOrder.setCsFlag("4");
+				umbrellaOrder.setStatus("fail");
+			}
 			if(null != umbrellaId && !"".equals(umbrellaId)) {
 				umbrellaOrder.setUmbrellaId(umbrellaId);
 				umbrellaOrder.setCsFlag("0");
 				umbrellaOrder.setBeginTime(new Date());
 				if("3".equals(sjFlag)) {
-					umbrellaOrder.setStatus("doing");
+					umbrellaOrder.setCsFlag("4");
+					umbrellaOrder.setStatus("fail");
 				} else {
 					umbrellaOrder.setStatus("finish");
 					// 操作库存信息
