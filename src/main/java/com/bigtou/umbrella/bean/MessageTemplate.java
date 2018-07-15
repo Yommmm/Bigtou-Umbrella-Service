@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,11 +17,9 @@ public class MessageTemplate {
 	private String msgTemplateId;
 	
 	@Column(name = "MSG_TEMPLATE_CODE")
-	@NotNull
 	private String msgTemplateCode;
 	
 	@Column(name = "MSG_TEMPLATE_CONTENT")
-	@NotNull
 	private String msgTemplateContent;
 
 	public String getMsgTemplateId() {

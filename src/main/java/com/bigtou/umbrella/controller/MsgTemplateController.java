@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bigtou.umbrella.bean.MessageTemplate;
 import com.bigtou.umbrella.service.MsgTemplateService;
 
@@ -22,7 +24,8 @@ public class MsgTemplateController {
 	private MsgTemplateService msgTemplateService;
 	
 	@PostMapping("/template")
-	public Object saveMsgTemplate(MessageTemplate messageTemplate) {
+	public Object saveMsgTemplate(@RequestBody MessageTemplate messageTemplate) {
+		logger.info("消息数据：{}", JSONObject.toJSON(messageTemplate).toString());
 		return msgTemplateService.saveMsgTemplate(messageTemplate);
 	}
 	
