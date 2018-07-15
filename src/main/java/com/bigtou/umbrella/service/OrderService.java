@@ -36,6 +36,7 @@ public class OrderService {
 		order.setMachineIP(machineIP);
 		order.setStatus("start");
 		order.setCreateTime(new Date());
+		order.setUserId(params.getUserId());
 		return orderRepository.save(order);
 	}
 

@@ -101,7 +101,7 @@ public class MachineService {
 		return result;
 	}
 	
-	public Object returnUmbrella(UmbrellaOrder params) {
+	public Object returnUmbrella(UmbrellaOrder params) throws Exception {
 		String umbrellaId = params.getUmbrellaId();
 		String sjFlag = params.getSjFlag();
 		UmbrellaOrder order = orderService.queryOrderByUmbrellaId(umbrellaId);
@@ -124,6 +124,8 @@ public class MachineService {
 				muHistory.setOperateDate(new Date());
 				muHistoryRepository.save(muHistory);
 			}
+		} else {
+			throw new Exception("sjFlag is not 4, please retry!");
 		}
 		return orderService.save(order);
 	}
